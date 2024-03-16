@@ -12,7 +12,8 @@ This repository is currently under construction and incomplete. Please see below
 - Site-to-site VPN between the transit gateway and customer gateway
 
 # Challenges
-user_data scripts does not execute on prod_app_server_1 ec2 instance
+- user_data scripts does not execute on prod_app_server_1 ec2 instance
+- could not get to communicate VPC to one another. Another solution on this one is by peering connection.
 
 # Workarounds
 Removed (commented) the NACL everywhere. Solved the "connection reset by peer" problem.
