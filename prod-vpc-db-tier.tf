@@ -1,3 +1,7 @@
+### UNDER CONSTRUCTION ###
+# This is a bare bones for the RDS tier. Follow step #5 on the link below:
+# https://aws.plainenglish.io/three-tier-application-c911d67f2619
+
 # DB tier
 
 resource "aws_subnet" "prod_subnet_private_3" {
