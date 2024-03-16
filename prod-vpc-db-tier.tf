@@ -152,3 +152,65 @@ resource "aws_network_acl" "prod_db_acl" {
 		Name = "prod_db_acl"
 	}
 } */
+
+# Create rds security group
+resource "aws_security_group" "prod_rds_sg" {
+	name = "prod_rds_sg"
+	description = "Allow inbound from APP"
+	vpc_id = aws_vpc.prod_vpc.id
+
+	ingress {
+    	description = "APP from VPC"
+    	from_port = 3306
+    	to_port = 3306
+    	protocol = "tcp"
+    	cidr_blocks = ["172.16.3.0/24", "172.16.4.0/24"]
+	}
+
+	/* egress {
+    	from_port = 0
+    	to_port = 0
+    	protocol = "-1"
+    	cidr_blocks = ["172.16.3.0/24", "172.16.4.0/24"]
+	}
+
+	ingress {
+    	description = "SSH from APP"
+    	from_port = 22
+    	to_port = 22
+    	protocol = "tcp"
+    	cidr_blocks = ["172.16.3.0/24", "172.16.4.0/24"]
+	} */
+}
+
+# Create rds instance
+resource "aws_db_instance" "prod_rds" {
+	identifier = "prod_rds"
+	allocated_storage = 20
+	storage_type = "gp2"
+	engine = "mysql"
+	engine_version = "5.7"
+	instance_class = "db.t2.micro"
+	username = "admin"
+	password = "admin1234"
+	vpc_security_group_ids = [aws_security_group.prod_rds_sg.id]
+	db_subnet_group_name = aws_db_subnet_group.prod_rds_subnet_group.name
+	#network_acl_id = aws_network_acl.prod_db_acl.id
+	skip_final_snapshot = true
+	multi_az = true
+	backup_retention_period = 7
+	deletion_protection = false
+	storage_encrypted = true
+	apply_immediately = true
+
+	tags = {
+		Name = "prod_rds"
+	}
+}
+
+
+
+
+
+
+
