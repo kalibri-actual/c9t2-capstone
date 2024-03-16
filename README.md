@@ -1,2 +1,3 @@
-# fields-c9t2-capstone
-# test
+# Fields - Cohort 9 - Team 2
+This repository is built for educational purposes only.
+
