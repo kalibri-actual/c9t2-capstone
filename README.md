@@ -6,7 +6,10 @@ This repository is currently under construction and incomplete. Please see below
 
 # AWS Console - to do's
 - Check if the load balancer actually works by installing php + apache on app_server_1 and app_server_2. This could be done via SSH from the jump server.
-
+- Create transit gateway
+- Create transit gateway attachments
+- Create customer gateway on the Corporate Data Center
+- Site-to-site VPN between the transit gateway and customer gateway
 
 # Challenges
 user_data scripts does not execute on prod_app_server_1 ec2 instance
@@ -14,5 +17,5 @@ user_data scripts does not execute on prod_app_server_1 ec2 instance
 # Workarounds
 Removed (commented) the NACL everywhere. Solved the "connection reset by peer" problem.
 
-# To Dos
+# Recommendations
 Check if the load balancer actually works by installing php + apache on app_server_1 and app_server_2. This could be done via SSH from the jump server.
