@@ -1,7 +1,7 @@
 #### Web tier ####
 
 # Create 2 public subnets
-resource "aws_subnet" "prod_subnet_public_1" { 
+resource "aws_subnet" "prod_subnet_public_1" { // check
 	vpc_id = aws_vpc.prod_vpc.id
   cidr_block = "172.16.1.0/24"
   availability_zone = "us-east-1a"
@@ -12,7 +12,7 @@ resource "aws_subnet" "prod_subnet_public_1" {
   }
 }
 
-resource "aws_subnet" "prod_subnet_public_2" { 
+resource "aws_subnet" "prod_subnet_public_2" { // check
 	vpc_id = aws_vpc.prod_vpc.id
   cidr_block = "172.16.2.0/24"
   availability_zone = "us-east-1b"
@@ -24,7 +24,7 @@ resource "aws_subnet" "prod_subnet_public_2" {
 }
 
 # Create a route table
-resource "aws_route_table" "prod_web_rt" { 
+resource "aws_route_table" "prod_web_rt" { // check
   vpc_id = aws_vpc.prod_vpc.id
   
   tags = {
@@ -32,37 +32,37 @@ resource "aws_route_table" "prod_web_rt" {
   }
 }
 
-resource "aws_route" "prod_web_route" { 
+resource "aws_route" "prod_web_route" { // check
   route_table_id = aws_route_table.prod_web_rt.id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id = aws_internet_gateway.prod_igw.id
 }
 
-# Associate the route table with the public subnets 
+# Associate the route table with the public subnets // check
 resource "aws_route_table_association" "prod_web_rt_assoc_1" {
   subnet_id      = aws_subnet.prod_subnet_public_1.id
   route_table_id = aws_route_table.prod_web_rt.id
 }
 
-resource "aws_route_table_association" "prod_web_rt_assoc_2" { 
+resource "aws_route_table_association" "prod_web_rt_assoc_2" { // check
   subnet_id      = aws_subnet.prod_subnet_public_2.id
   route_table_id = aws_route_table.prod_web_rt.id
 }
 
-# Create network acl // applies at the subnet level // 
+/* # Create network acl // applies at the subnet level // not too complicated but it will mess up your network // allow all traffic
 resource "aws_network_acl" "prod_web_nacl" {
   vpc_id = aws_vpc.prod_vpc.id
   subnet_ids = [aws_subnet.prod_subnet_public_1.id, aws_subnet.prod_subnet_public_2.id]
 
-  # Allow all
+  /* # Allow all
     ingress {
-      protocol   = "-1"
+    protocol   = "-1"
     rule_no    = 100
     action     = "allow"
     cidr_block = "0.0.0.0/0"
     from_port  = 0
     to_port    = 0
-  }
+  } */
   
   /* # Allow traffic port 22
     ingress {
@@ -74,11 +74,9 @@ resource "aws_network_acl" "prod_web_nacl" {
     to_port    = 22
   } */
 
-  tags = {
+  /*tags = {
     Name = "prod_web_nacl"
-  }
-
-}
+  } */
 
 # Create a web server security group // applies at the instance level
 resource "aws_security_group" "prod_web_sg" {
