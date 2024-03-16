@@ -1,4 +1,5 @@
-# App tier
+### App tier ###
+# By far the most challenging one in Terraform especially setting up the application load balancer
 
 # Create private subnets
 resource "aws_subnet" "prod_subnet_private_1" {
@@ -50,7 +51,7 @@ resource "aws_route_table_association" "prod_app_rt_association_2" {
   route_table_id = aws_route_table.prod_app_rt.id
 }
 
-# Create network acl
+/* # Create network acl
 resource "aws_network_acl" "prod_app_nacl" {
   vpc_id     = aws_vpc.prod_vpc.id
   subnet_ids = [aws_subnet.prod_subnet_private_1.id, aws_subnet.prod_subnet_private_2.id]
@@ -68,7 +69,7 @@ resource "aws_network_acl" "prod_app_nacl" {
   tags = {
     Name = "prod-app-nacl"
   }
-}
+} */
 
 
 
@@ -172,22 +173,7 @@ resource "aws_volume_attachment" "prod_app_server_1_ebs_att" {
   instance_id = aws_instance.prod_app_server_1.id
 }
 
-## hard to setup --- maybe beneficial to do it manually
-
-/* # Create application load balancer
-resource "aws_lb" "prod_app_lb" {
-  name = "prod-app-lb"
-  internal = false
-  load_balancer_type = "application"
-  security_groups = [aws_security_group.prod_app_sg.id]
-  subnets = [aws_subnet.prod_subnet_private_1.id, aws_subnet.prod_subnet_private_2.id]
-
-  enable_deletion_protection = false
-
-  tags = {
-    Environment = "production"
-  }
-} */
+## challenging to setup --- maybe beneficial to do it manually
 
 resource "aws_security_group" "lb-sg" {
   name        = "lb-sg"
@@ -236,12 +222,14 @@ resource "aws_lb_target_group" "prod_app_lb_tg" {
   protocol = "HTTP"
   vpc_id   = aws_vpc.prod_vpc.id
 }
+
 # Create target group attachment for app lb
 resource "aws_lb_target_group_attachment" "prod_app_lb_tg_att" {
   target_group_arn = aws_lb_target_group.prod_app_lb_tg.arn
   target_id        = aws_instance.prod_app_server_1.id
   port             = 80
 }
+
 resource "aws_lb_target_group_attachment" "prod_app_lb_tg_att_2" {
   target_group_arn = aws_lb_target_group.prod_app_lb_tg.arn
   target_id        = aws_instance.prod_app_server_2.id
