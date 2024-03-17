@@ -1,16 +1,4 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.0"
-    }
-  }
-}
-
-# Define AWS provider
-provider "aws" {
-  region = "us-east-1"
-}
+# non-prod-vpc #
 
 # Create VPC
 resource "aws_vpc" "non-prod_vpc" { 

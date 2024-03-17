@@ -1,18 +1,6 @@
 ### Credit goes to Meena Rizwan ###
 
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.0"
-    }
-  }
-}
-
-# Define AWS provider
-provider "aws" {
-  region = "us-east-1"
-}
+# on-prem-vpc #
 
 # VPC
 resource "aws_vpc" "corporate_data_center_vpc" {
