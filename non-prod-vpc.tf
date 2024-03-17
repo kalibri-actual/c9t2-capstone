@@ -103,4 +103,3 @@ resource "aws_instance" "redhat_instance" {
   subnet_id     = aws_subnet.private_subnet.id
   vpc_security_group_ids = [aws_security_group.my_sg.id]
 }
-
