@@ -21,6 +21,7 @@ resource "aws_subnet" "non_prod-private_subnet" {
   }
 }
 
+
 # Create route table
 resource "aws_route_table" "non_prod-private_rt" {
   vpc_id = aws_vpc.non-prod_vpc.id

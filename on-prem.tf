@@ -168,6 +168,19 @@ resource "aws_route_table_association" "corporate_data_center_private_route_tabl
   subnet_id      = aws_subnet.corporate_data_center_private_subnet.id
   route_table_id = aws_route_table.corporate_data_center_prod_route_table.id
 }
+
+resource "aws_route" "on-prem-twg-route" {
+  route_table_id         = aws_route_table.corporate_data_center_prod_route_table.id
+  destination_cidr_block = "172.16.0.0/16"
+  gateway_id             = aws_internet_gateway.corporate_data_center_internet_gateway.id
+}
+
+resource "aws_route" "on-prem-twg-route-2" {
+  route_table_id         = aws_route_table.corporate_data_center_prod_route_table.id
+  destination_cidr_block = "172.20.0.0/22"
+  gateway_id             = aws_internet_gateway.corporate_data_center_internet_gateway.id
+}  
+
 # Create security group
 resource "aws_security_group" "corporate_data_center_sg" {
   name        = "corporate_data_center_prod_sg"

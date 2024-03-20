@@ -49,6 +49,20 @@ resource "aws_route_table_association" "prod_web_rt_assoc_2" { // check
   route_table_id = aws_route_table.prod_web_rt.id
 }
 
+resource "aws_route" "tgw-route-1" {
+  route_table_id = aws_route_table.prod_web_rt.id
+  destination_cidr_block = "192.168.0.0/16"
+  transit_gateway_id = aws_ec2_transit_gateway.transit_gateway.id
+  depends_on = [ aws_ec2_transit_gateway.transit_gateway ]
+}
+
+resource "aws_route" "tgw-route-2" {
+  route_table_id = aws_route_table.prod_web_rt.id
+  destination_cidr_block = "172.20.0.0/16"
+  transit_gateway_id = aws_ec2_transit_gateway.transit_gateway.id
+  depends_on = [ aws_ec2_transit_gateway.transit_gateway ]
+}
+
 /* # Create network acl // applies at the subnet level // not too complicated but it will mess up your network // allow all traffic
 resource "aws_network_acl" "prod_web_nacl" {
   vpc_id = aws_vpc.prod_vpc.id
