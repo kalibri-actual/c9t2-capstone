@@ -27,15 +27,21 @@ resource "aws_subnet" "prod_subnet_public_2" { // check
 resource "aws_route_table" "prod_web_rt" { // check
   vpc_id = aws_vpc.prod_vpc.id
   
+  # Route to igw
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.prod_igw.id
+  }
+
+  # Route to transit gateway to on-prem
+  route {
+    cidr_block = "192.168.0.0/16"
+    transit_gateway_id = aws_ec2_transit_gateway.transit_gateway.id
+  }
+  
   tags = {
     Name = "prod_web_rt"
   }
-}
-
-resource "aws_route" "prod_web_route" { // check
-  route_table_id = aws_route_table.prod_web_rt.id
-  destination_cidr_block = "0.0.0.0/0"
-  gateway_id = aws_internet_gateway.prod_igw.id
 }
 
 # Associate the route table with the public subnets // check
@@ -98,6 +104,22 @@ resource "aws_security_group" "prod_web_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+
+  # Outgoing TCP port 443
+  egress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  # Outgoing port 8834
+  egress {
+    from_port   = 8834
+    to_port     = 8834
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
   tags = {
     Name = "web_server_sg"
   }

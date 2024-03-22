@@ -168,6 +168,19 @@ resource "aws_route_table_association" "corporate_data_center_private_route_tabl
   subnet_id      = aws_subnet.corporate_data_center_private_subnet.id
   route_table_id = aws_route_table.corporate_data_center_prod_route_table.id
 }
+
+resource "aws_route" "on-prem-twg-route" {
+  route_table_id         = aws_route_table.corporate_data_center_prod_route_table.id
+  destination_cidr_block = "172.16.0.0/16"
+  gateway_id             = aws_internet_gateway.corporate_data_center_internet_gateway.id
+}
+
+resource "aws_route" "on-prem-twg-route-2" {
+  route_table_id         = aws_route_table.corporate_data_center_prod_route_table.id
+  destination_cidr_block = "172.20.0.0/22"
+  gateway_id             = aws_internet_gateway.corporate_data_center_internet_gateway.id
+}  
+
 # Create security group
 resource "aws_security_group" "corporate_data_center_sg" {
   name        = "corporate_data_center_prod_sg"
@@ -194,12 +207,54 @@ resource "aws_security_group" "corporate_data_center_sg" {
     protocol    = "icmp"
     cidr_blocks = ["0.0.0.0/0"]  # Allow traffic from anywhere
   }
+  # Allow 8834
+    ingress {
+    from_port   = 8834
+    to_port     = 8834
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]  # Allow traffic from anywhere
+  }
 
   # Allow outbound traffic to anywhere
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  # egress port 25
+    egress {
+    from_port   = 25
+    to_port     = 25
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  # eggress port 389
+    egress {
+    from_port   = 389
+    to_port     = 389
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  # egress port 443
+    egress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  # egress port 3128
+    egress {
+    from_port   = 3128
+    to_port     = 3128
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  # outgoing UDP port 53
+    egress {
+    from_port   = 53
+    to_port     = 53
+    protocol    = "udp"
     cidr_blocks = ["0.0.0.0/0"]
   }
   

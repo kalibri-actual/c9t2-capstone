@@ -34,11 +34,17 @@ resource "aws_route_table" "prod_app_rt" {
 }
 
 # Create app server route
-resource "aws_route" "prod_app_route" {
+resource "aws_route" "prod_app_route-to-nat-gw" {
   route_table_id            = aws_route_table.prod_app_rt.id
   destination_cidr_block    = "0.0.0.0/0"
   #gateway_id = aws_internet_gateway.prod_igw.id
   nat_gateway_id = aws_nat_gateway.prod_nat_gw.id
+}
+
+resource "aws_route" "prod-app-route-to-on-prem" {
+  route_table_id            = aws_route_table.prod_app_rt.id
+  destination_cidr_block    = "192.160.0.0/16"
+  transit_gateway_id = aws_ec2_transit_gateway.transit_gateway.id
 }
 
 # Associate app server route table with app server subnets
@@ -173,69 +179,5 @@ resource "aws_volume_attachment" "prod_app_server_1_ebs_att" {
   instance_id = aws_instance.prod_app_server_1.id
 }
 
-## challenging to setup --- maybe beneficial to do it manually
-
-resource "aws_security_group" "lb-sg" {
-  name        = "lb-sg"
-  description = "controls access to the ALB"
-  vpc_id      = aws_vpc.prod_vpc.id
-
-  ingress {
-    protocol    = "tcp"
-    from_port   = 80
-    to_port     = 80
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    Name = "lb-sg"
-  }
-}
-
-resource "aws_lb" "prod_app_lb" {
-  name                = "prod-app-lb"
-  internal            = false
-  load_balancer_type  = "application"
-  security_groups     = [aws_security_group.lb-sg.id]
-  
-  
-  subnet_mapping {
-    subnet_id = aws_subnet.prod_subnet_public_1.id
-  }
-
-  subnet_mapping {
-    subnet_id = aws_subnet.prod_subnet_public_2.id
-  }
-}
-
-# Create target group for app lb
-resource "aws_lb_target_group" "prod_app_lb_tg" {
-  name     = "prod-app-lb-tg"
-  port     = 80
-  protocol = "HTTP"
-  vpc_id   = aws_vpc.prod_vpc.id
-}
-
-# Create target group attachment for app lb
-resource "aws_lb_target_group_attachment" "prod_app_lb_tg_att" {
-  target_group_arn = aws_lb_target_group.prod_app_lb_tg.arn
-  target_id        = aws_instance.prod_app_server_1.id
-  port             = 80
-}
-
-resource "aws_lb_target_group_attachment" "prod_app_lb_tg_att_2" {
-  target_group_arn = aws_lb_target_group.prod_app_lb_tg.arn
-  target_id        = aws_instance.prod_app_server_2.id
-  port             = 80
-}
-
-
-
+## challenging to setup --- maybe beneficial to do it manually -- Application LB 
 
