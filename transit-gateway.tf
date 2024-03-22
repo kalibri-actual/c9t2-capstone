@@ -22,15 +22,6 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "corporate_data_center_vpc" {
     vpc_id = aws_vpc.corporate_data_center_vpc.id
 }
 
-# Create transit gateway route tables
-resource "aws_ec2_transit_gateway_route_table" "tg_route_table" {
-    transit_gateway_id = aws_ec2_transit_gateway.transit_gateway.id
-        
-    tags = {
-        Name = "tg_route_table"
-    }
-}
-
 
 
 
