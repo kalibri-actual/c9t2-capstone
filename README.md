@@ -1,6 +1,6 @@
 # C9T2
 
-This repository is currently under construction and incomplete.
+This repository is currently under construction and incomplete. For learning purposes only.
 
 ![image](https://github.com/kalibri-actual/fields-c9t2-capstone/assets/155348375/d6d73526-acbb-4450-ac56-5da6c48ca5d7)
 
