@@ -2,6 +2,13 @@
 
 This repository is currently under construction and incomplete. For learning purposes only.
 
+Objective _(for now)_
+- Create a three-tier highly available application environment in a Production VPC.
+- A Non-production environment in a separate VPC.
+- An On-prem environment (simulated with an AWS VPC)
+- Connect VPCs using transit gateway
+- Simulate Site-to-Site VPN Customer Gateways Using strongSwan
+
 ![image](https://github.com/kalibri-actual/fields-c9t2-capstone/assets/155348375/d6d73526-acbb-4450-ac56-5da6c48ca5d7)
 
 # To Do's
@@ -12,7 +19,7 @@ This repository is currently under construction and incomplete. For learning pur
 - ~~Create customer gateway on the Corporate Data Center.~~
 - Site-to-site VPN between the transit gateway and customer gateway.
 - Update the image - add jump server on non-prod
-- Generate key pair on Terraform
+- Generate key pair using Terraform
 
 # Challenges
 - user_data scripts do not execute on prod_app_server_1 ec2 instance
