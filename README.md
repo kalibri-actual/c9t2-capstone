@@ -1,4 +1,4 @@
-# Deploy a secure hybrid cloud environment
+# Deploy a secure hybrid cloud environment using Terraform
 
 This repository is currently under construction. For learning purposes only.
 
