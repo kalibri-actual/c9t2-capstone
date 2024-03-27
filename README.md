@@ -1,13 +1,14 @@
-# C9T2
+# Deploy a secure hybrid cloud environment
 
-This repository is currently under construction and incomplete. For learning purposes only.
+This repository is currently under construction. For learning purposes only.
 
 Objective _(for now)_
-- Create a three-tier highly available application environment in a Production VPC.
-- A Non-production environment in a separate VPC.
-- An On-prem environment (simulated with an AWS VPC)
-- Connect VPCs using transit gateway
-- Simulate Site-to-Site VPN Customer Gateways Using strongSwan
+
+:white_check_mark:    Create a three-tier highly available application environment in a Production VPC. <br>
+:white_check_mark:    A Non-production environment in a separate VPC. <br>
+:white_check_mark:    An On-prem environment (simulated with an AWS VPC) <br>
+:white_check_mark:    Connect VPCs using transit gateway <br>
+:black_square_button: Simulate Site-to-Site VPN Customer Gateways Using strongSwan <br>
 
 ![image](https://github.com/kalibri-actual/fields-c9t2-capstone/assets/155348375/d6d73526-acbb-4450-ac56-5da6c48ca5d7)
 
