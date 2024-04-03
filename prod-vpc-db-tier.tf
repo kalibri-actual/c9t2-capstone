@@ -125,42 +125,16 @@ resource "aws_security_group" "prod_rds_sg" {
 	}
 }
 
-/* # Create a network acl
-resource "aws_network_acl" "prod_db_acl" {
-	vpc_id = aws_vpc.prod_vpc.id
-	#subnet_ids = [aws_subnet.prod_subnet_private_3.id, aws_subnet.prod_subnet_private_4.id] 
+# Create a network acl
 
-	egress {
-		rule_no = 100
-		action = "allow"
-		cidr_block = "0.0.0.0/0"
-		from_port = 0
-		protocol = "-1"
-		to_port = 0
-	}
-
-	ingress {
-		rule_no = 100
-		action = "allow"
-		cidr_block = "0.0.0.0/0"
-		from_port = 0
-		protocol = "-1"
-		to_port = 0
-	}
-
-	tags = {
-		Name = "prod_db_acl"
-	}
-} */
-
-# Create rds instance
+/* # Create rds instance
 resource "aws_db_instance" "prod_rds" {
 	identifier = "prod-rds"
 	allocated_storage = 20
 	storage_type = "gp2"
 	engine = "mysql"
-	engine_version = "5.7"
-	instance_class = "db.t2.micro"
+	engine_version = "8.0.35"
+	instance_class = "db.t3.micro"
 	username = "admin"
 	password = "admin1234"
 	vpc_security_group_ids = [aws_security_group.prod_rds_sg.id]
@@ -176,11 +150,22 @@ resource "aws_db_instance" "prod_rds" {
 	tags = {
 		Name = "prod_rds"
 	}
+} */
+
+# Create rds instance
+resource "aws_db_instance" "prod-rds" {
+	allocated_storage = 10
+	db_name = "production"
+	engine = "mysql"
+	engine_version = "8.0.35"
+	instance_class = "db.t3.micro"
+	username = "foo"
+	password = "foobarbaz"
+	#parameter_group_name = "default.mysql8.0"
+	skip_final_snapshot = true
+	db_subnet_group_name = aws_db_subnet_group.prod_rds_subnet_group.name
+
+	tags = {
+	  Name = "prod-rds"
+	}
 }
-
-
-
-
-
-
-

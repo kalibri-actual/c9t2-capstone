@@ -7,7 +7,7 @@ resource "aws_vpc" "corporate_data_center_vpc" {
   cidr_block            = "192.168.0.0/16"
   enable_dns_support    = true
   enable_dns_hostnames  = true
-  # Tags
+
   tags = {
     Name        = "Corporate Data Center VPC"
     Environment = "Production"
@@ -265,44 +265,7 @@ resource "aws_security_group" "corporate_data_center_sg" {
   }
 }
 
-
-
-
-/* # Network ACL for Private Subnet
-resource "aws_network_acl" "corporate_data_center_private_nacl" {
-  vpc_id = aws_vpc.corporate_data_center_vpc.id
-  # Inbound rules
-  ingress {
-    protocol      = "tcp"
-    rule_no       = 100
-    action        = "allow"
-    cidr_block    = "192.168.0.0/16"  # Allow traffic from the entire on-premises VPC
-    from_port     = 80
-    to_port       = 80
-  }
-  # Outbound rules
-  egress {
-    protocol      = "tcp"
-    rule_no       = 200
-    action        = "allow"
-    cidr_block    = "172.16.0.0/16"   # Allow traffic to prod VPC
-    from_port     = 443
-    to_port       = 443
-  }
-  egress {
-    protocol      = "tcp"
-    rule_no       = 201
-    action        = "allow"
-    cidr_block    = "172.20.0.0/22"   # Allow traffic to non-prod VPC
-    from_port     = 443
-    to_port       = 443
-  }
-  # Tags
-  tags = {
-    Name        = "Corporate Data Center Network ACL for Private Subnet"
-    Environment = "Production"
-  }
-} */
+# Network ACL for Private Subnet
 
 /* # Route Table for Corporate Data Center VPC
 resource "aws_route_table" "corporate_data_center_route_table" {
