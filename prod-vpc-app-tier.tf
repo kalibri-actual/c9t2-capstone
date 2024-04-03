@@ -57,27 +57,7 @@ resource "aws_route_table_association" "prod_app_rt_association_2" {
   route_table_id = aws_route_table.prod_app_rt.id
 }
 
-/* # Create network acl
-resource "aws_network_acl" "prod_app_nacl" {
-  vpc_id     = aws_vpc.prod_vpc.id
-  subnet_ids = [aws_subnet.prod_subnet_private_1.id, aws_subnet.prod_subnet_private_2.id]
-
-  # Allow ephemeral ports egress
-    egress {
-    protocol   = "tcp"
-    rule_no    = 100
-    action     = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port  = 1024
-    to_port    = 65535
-  }
-
-  tags = {
-    Name = "prod-app-nacl"
-  }
-} */
-
-
+# Create network acl
 
 # Create security group - app
 resource "aws_security_group" "prod_app_sg" {
@@ -132,6 +112,7 @@ resource "aws_security_group" "prod_app_sg" {
 }
 
 ### EC2 Instances ###
+
 resource "aws_instance" "prod_app_server_1" {
 	ami = "ami-0f403e3180720dd7e" #"ami-0aedf6b1cb669b4c7" // Cent OS
 	instance_type = "t2.micro"
@@ -143,7 +124,6 @@ resource "aws_instance" "prod_app_server_1" {
 	tags = {
     	Name = "prod_app_server_1"
 	}
-
 }
 
 resource "aws_instance" "prod_app_server_2" {
@@ -157,7 +137,6 @@ resource "aws_instance" "prod_app_server_2" {
 	tags = {
     	Name = "prod_app_server_2"
 	}
-
 }
 
 # Create EBS volume for app server
@@ -179,5 +158,6 @@ resource "aws_volume_attachment" "prod_app_server_1_ebs_att" {
   instance_id = aws_instance.prod_app_server_1.id
 }
 
-## challenging to setup --- maybe beneficial to do it manually -- Application LB 
+## challenging to setup using Terraform --- maybe beneficial to do it manually -- Application LB
+
 
