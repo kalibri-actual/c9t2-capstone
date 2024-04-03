@@ -1,8 +1,7 @@
 # Deploy a secure hybrid cloud environment using Terraform
+For learning purposes only.
 
-This repository is currently under construction. For learning purposes only.
-
-Objective _(for now)_
+Objective:
 
 :white_check_mark:    Create a three-tier highly available application environment in a Production VPC. <br>
 :white_check_mark:    A Non-production environment in a separate VPC. <br>
