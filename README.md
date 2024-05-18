@@ -9,7 +9,10 @@ Objective:
 :white_check_mark:    Connect VPCs using transit gateway <br>
 :black_square_button: Simulate Site-to-Site VPN Customer Gateways Using strongSwan <br>
 
-![capstone-diagram](https://github.com/kalibri-actual/c9t2-capstone/assets/155348375/3ce5648f-4110-4171-9d99-0e9e61f44140)
+# Architecture Diagram
+
+![capstone-diagram](https://github.com/kalibri-actual/c9t2-capstone/assets/155348375/fdfba826-7218-4aea-959a-dd5ab1b2c4bb)
+
 
 # To Do's
 
