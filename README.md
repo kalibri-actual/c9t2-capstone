@@ -9,9 +9,10 @@ Objective:
 :white_check_mark:    Connect VPCs using transit gateway <br>
 :black_square_button: Simulate Site-to-Site VPN Customer Gateways Using strongSwan <br>
 
-![image](https://github.com/kalibri-actual/fields-c9t2-capstone/assets/155348375/d6d73526-acbb-4450-ac56-5da6c48ca5d7)
+![capstone-diagram](https://github.com/kalibri-actual/c9t2-capstone/assets/155348375/3ce5648f-4110-4171-9d99-0e9e61f44140)
 
 # To Do's
+
 - Create a key pair named capstone-key to SSH to the jump server.
 - user_data scripts are not working upon deployment. Probable solution: launch template(?). Alternative: install php and apache manually.
 - ~~Create transit gateway.~~
